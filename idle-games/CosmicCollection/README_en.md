@@ -5,6 +5,8 @@
 This is a **quality-of-life automation script** designed to make idle grinding easier.  
 It takes care of repetitive clicking so you can focus on enjoying the game.  
 
+[Game Introduction](https://www.gityx.com/g8hh/hanhuazhong/1079.html)
+
 ---
 
 ## ✨ Features  
