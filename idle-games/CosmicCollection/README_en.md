@@ -46,31 +46,47 @@ New buttons will appear in the **top navigation bar (Tabs)**:
 
 ## 🚀 How to Use  
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) or any userscript manager  
+1. Install [Tampermonkey](https://www.tampermonkey.net/) or similar userscript manager  
+
+   - **Chrome / Edge / Firefox**: Recommended [Tampermonkey](https://www.tampermonkey.net/)  
+   - **Safari / Other browsers**: Also supports [Violentmonkey](https://violentmonkey.github.io/)  
+
 2. Add this script  
-3. Open the game (supported domains):  
+
+   > **Method A: One-click install via GreasyFork**
+   >1. Open script page: [Cosmic Collection Idle Helper](https://greasyfork.org/zh-CN/scripts/548118-%E5%AE%87%E5%AE%99%E6%94%B6%E9%9B%86%E6%94%BE%E7%BD%AE-%E5%8A%A9%E6%89%8B)
+   >2. Click **Install this script** button.
+   >3. Tampermonkey will automatically show installation page, click **Install** to complete.
+   > ✅ This method is simplest and will notify you when script updates are available.
+   >---
+   > **Method B: Manual script installation**
+   >1. [One-click install](https://github.com/LemonNoCry/games-scripts/raw/refs/heads/main/idle-games/CosmicCollection/CosmicCollectionScript.user.js)
+   >2. Save and enable the script.
+   > ⚠️ This method is similar to one-click install, but GitHub won't automatically notify updates, you need to manually visit the Raw URL to update the script
+
+3. Open the game page (supports the following addresses):  
    - <https://gltyx.github.io/>  
    - <https://cosmic-collection.g8hh.com.cn/>  
    - <https://kuzzigames.com/cosmic_collection/>  
-4. New buttons will appear at the top bar — enjoy automation!  
+4. New function buttons will appear at the top of the game interface — enjoy automation!  
 
 ---
 
 ## ⚠️ Notes  
 
-- The script runs **entirely locally** — no data collection involved  
-- Intended only for reducing repetitive clicks  
-- Some strategic gameplay decisions must still be made manually  
+- This script runs **entirely locally** and does **not collect any data**  
+- Only used for convenient idle gaming, reducing repetitive clicks  
+- You still need to manually perform some key strategic operations  
 
 ---
 
 ## 🎮 Summary  
 
-This is a **lightweight but powerful idle helper**:  
+This is a **lightweight yet practical idle automation tool**:  
 
-- Auto card buying, never miss a card  
-- Auto hole drilling, no wasted chances  
-- Auto clock clicks, no forgotten boosts  
-- Toggle buttons for full player control  
+- Auto card buying, never fall behind  
+- Auto hole drilling, no waste  
+- Auto clock, never forget  
+- Toggle buttons, enable when you want  
 
-Make your experience truly **hands-free and fun** 🚀
+Let you truly achieve **easy idle gaming, happy collecting** 🚀

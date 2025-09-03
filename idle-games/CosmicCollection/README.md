@@ -47,7 +47,23 @@
 ## 🚀 使用方法  
 
 1. 安装 [Tampermonkey](https://www.tampermonkey.net/) 或类似脚本管理器  
+
+   - **Chrome / Edge / Firefox**：推荐 [Tampermonkey](https://www.tampermonkey.net/)  
+   - **支持 Safari / 其他浏览器**：也可使用 [Violentmonkey](https://violentmonkey.github.io/)  
+
 2. 添加此脚本  
+
+   > **方法 A：通过 GreasyFork 一键安装**
+   >1. 打开脚本地址：[宇宙收集放置-助手](https://greasyfork.org/zh-CN/scripts/548118-%E5%AE%87%E5%AE%99%E6%94%B6%E9%9B%86%E6%94%BE%E7%BD%AE-%E5%8A%A9%E6%89%8B)
+   >2. 点击 **安装此脚本** 按钮。
+   >3. 油猴会自动弹出安装页面，点击 **安装** 即可。
+   > ✅ 这种方式最简单，脚本自动更新时也会提醒。
+   >---
+   > **方法 B：手动添加脚本**
+   >1. [一键安装](https://github.com/LemonNoCry/games-scripts/raw/refs/heads/main/idle-games/CosmicCollection/CosmicCollectionScript.user.js)
+   >2. 保存并启用脚本.
+   > ⚠️ 这种方式类似一键安装，但 GitHub 不会自动提醒更新，需要手动访问 Raw URL 更新脚本
+
 3. 打开游戏页面（支持以下地址）：  
    - <https://gltyx.github.io/>  
    - <https://cosmic-collection.g8hh.com.cn/>  
