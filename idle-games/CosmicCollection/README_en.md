@@ -34,13 +34,22 @@ It takes care of repetitive clicking so you can focus on enjoying the game.
 
 ---
 
-### 4. Player Controls (Toggle Buttons)  
+### 4. Auto Harvester
+
+- Automatically clicks the **Harvester button**
+- Periodically triggers to boost harvester output efficiency
+- Ensures no harvester resources go to waste
+
+---
+
+### 5. Player Controls (Toggle Buttons)  
 
 New buttons will appear in the **top navigation bar (Tabs)**:  
 
 - `Auto Cards ✅ / ❌`  
 - `Auto Hole ✅ / ❌`  
 - `Auto Clock ✅ / ❌`  
+- `Auto Harvester ✅ / ❌`
 
 👉 You can enable or disable each feature anytime, full control in your hands.  
 

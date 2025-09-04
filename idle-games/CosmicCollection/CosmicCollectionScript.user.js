@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.4
+// @version      1.5
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -16,9 +16,14 @@
 (function () {
     'use strict';
 
-    let holeEnabled = true;     // 控制打洞
-    let buyEnabled = true;      // 控制购卡
-    let clockEnabled = true;    // 控制时钟
+    /** 控制打洞功能的开关 */
+    let holeEnabled = true;
+    /** 控制购卡功能的开关 */
+    let buyEnabled = true;
+    /** 控制时钟功能的开关 */
+    let clockEnabled = true;
+    /** 控制黑洞加速功能的开关 */
+    let holeSpeedEnabled = true;
 
     /**
      * 创建用于自动化各种游戏功能的切换按钮，并将它们添加到导航栏中。
@@ -76,9 +81,25 @@
             console.log(clockEnabled ? "✅ 自动时钟已启用" : "⏸ 自动时钟已禁用");
         });
         nav.appendChild(clockBtn);
+
+        // 黑洞加速按钮
+        const holeSpeedBtn = document.createElement("button");
+        holeSpeedBtn.id = "auto-hole-speed-btn";
+        holeSpeedBtn.className = "tab-btn";
+        holeSpeedBtn.innerText = "自动黑洞加速✅";
+        holeSpeedBtn.addEventListener("click", () => {
+            holeSpeedEnabled = !holeSpeedEnabled;
+            holeSpeedBtn.innerText = holeSpeedEnabled ? "自动黑洞加速✅" : "自动黑洞加速❌";
+            console.log(holeSpeedEnabled ? "✅ 自动黑洞加速已启用" : "⏸ 自动黑洞加速已禁用");
+        });
+        nav.appendChild(holeSpeedBtn);
     }
 
-    // ===== 内部函数：触发卡片 mouseenter =====
+    /**
+     * 触发卡片的鼠标悬停事件
+     * 遍历抽卡区域的所有卡片，为每张卡片触发 mouseenter 事件
+     * @returns {void}
+     */
     function triggerCardMouseEnter() {
         const cards = document.querySelectorAll('.draw-area .card-outer');
         cards.forEach(card => {
@@ -94,7 +115,12 @@
         });
     }
 
-    // ===== 判断按钮是否可见 =====
+    /**
+     * 判断按钮是否可见
+     * 检查按钮的显示状态，包括 display、visibility、opacity 和 hidden 属性
+     * @param {HTMLElement} btn - 要检查的按钮元素
+     * @returns {boolean} 如果按钮可见返回 true，否则返回 false
+     */
     function isButtonVisible(btn) {
         if (!btn) return false;
         const style = window.getComputedStyle(btn);
@@ -106,7 +132,11 @@
         );
     }
 
-    // ===== 点击批量购买按钮 =====
+    /**
+     * 点击批量购买按钮
+     * 查找并点击商人的批量购买按钮（如果可见）
+     * @returns {void}
+     */
     function tryClickBulkBuy() {
         const btn = document.getElementById("merchant-bulkbuy-btn");
         if (btn && isButtonVisible(btn)) {
@@ -115,7 +145,11 @@
         }
     }
 
-    // ===== 点击单卡购买按钮 =====
+    /**
+     * 点击单卡购买按钮
+     * 查找所有可购买的单卡购买按钮并逐一点击
+     * @returns {void}
+     */
     function tryClickSingleBuys() {
         const btns = document.querySelectorAll(".offer-buy-btn:not(.unaffordable)");
         btns.forEach(btn => {
@@ -126,7 +160,11 @@
         });
     }
 
-    // ===== 点击打洞按钮 + 悬停卡片 =====
+    /**
+     * 点击打洞按钮并触发卡片悬停
+     * 点击打洞按钮，成功后触发所有卡片的鼠标悬停事件
+     * @returns {void}
+     */
     function tryClickHole() {
         const btn = document.getElementById("hole-button");
         if (btn && isButtonVisible(btn)) {
@@ -136,7 +174,11 @@
         }
     }
 
-    // ===== 点击时钟按钮 =====
+    /**
+     * 点击时钟按钮
+     * 查找并点击时间压缩按钮（如果可见）
+     * @returns {void}
+     */
     function tryClickClock() {
         const btn = document.getElementById("time-crunch-button");
         if (btn && isButtonVisible(btn)) {
@@ -146,14 +188,35 @@
         }
     }
 
-    // ===== 主循环 =====
+    /**
+     * 点击黑洞加速按钮
+     * 查找并点击黑洞加速按钮（如果可见）
+     * @returns {void}
+     */
+    function tryClickHoleSpeed() {
+        const btn = document.getElementById("harvester-button");
+        if (btn && isButtonVisible(btn)) {
+            const ev = new MouseEvent("click", { bubbles: true, cancelable: true, view: window });
+            btn.dispatchEvent(ev);
+            console.log("🕳️ 黑洞加速按钮点击成功");
+        }
+    }
+
+    /**
+     * 主循环管理器
+     * 设置定时器来自动执行各种游戏操作：
+     * - 每秒执行：打洞、批量购卡、时钟操作
+     * - 每2秒执行：单卡购买
+     * @returns {void}
+     */
     function autoClickManager() {
         // 每秒尝试：打洞 + 批量购卡 + 时钟
-        setInterval(() => {
-            if (holeEnabled) tryClickHole();
-            if (buyEnabled) tryClickBulkBuy();
-            if (clockEnabled) tryClickClock();
-        }, 1000);
+        setInterval(() => { if (holeEnabled) tryClickHole(); }, 1000);
+        setInterval(() => { if (buyEnabled) tryClickBulkBuy(); }, 1000);
+        setInterval(() => { if (clockEnabled) tryClickClock(); }, 1000);
+
+        // 每2秒尝试：黑洞加速
+        setInterval(() => { if (holeSpeedEnabled) tryClickHoleSpeed(); }, 2000);
 
         // 单卡购卡（2s 一次）
         setInterval(() => {
@@ -161,7 +224,7 @@
         }, 2000);
     }
 
-    // 启动
+    // 脚本启动入口
     createToggleButtons();
     autoClickManager();
     console.log("🚀 自动购卡 / 打洞 / 时钟 脚本已启动（按钮集成到 tab 导航栏）");
