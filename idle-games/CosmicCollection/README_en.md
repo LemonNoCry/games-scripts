@@ -52,6 +52,7 @@ New buttons will appear in the **top navigation bar (Tabs)**:
 - `Auto Harvester ✅ / ❌`
 
 👉 You can enable or disable each feature anytime, full control in your hands.  
+👉 Supports memory function, will automatically restore previous settings on next game load.
 
 ---
 
@@ -69,7 +70,9 @@ New buttons will appear in the **top navigation bar (Tabs)**:
    >2. Click **Install this script** button.
    >3. Tampermonkey will automatically show installation page, click **Install** to complete.
    > ✅ This method is simplest and will notify you when script updates are available.
-   >---
+
+   or
+
    > **Method B: Manual script installation**
    >1. [One-click install](https://github.com/LemonNoCry/games-scripts/raw/refs/heads/main/idle-games/CosmicCollection/CosmicCollectionScript.user.js)
    >2. Save and enable the script.

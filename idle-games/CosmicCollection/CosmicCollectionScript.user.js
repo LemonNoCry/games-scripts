@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.5
+// @version      1.6
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -16,6 +16,9 @@
 (function () {
     'use strict';
 
+    /** 存储的 key 名称 */
+    const STORAGE_KEY = "cosmic_helper_settings";
+
     /** 控制打洞功能的开关 */
     let holeEnabled = true;
     /** 控制购卡功能的开关 */
@@ -24,6 +27,48 @@
     let clockEnabled = true;
     /** 控制黑洞加速功能的开关 */
     let holeSpeedEnabled = true;
+
+    /** UI 引用，便于后续刷新文本 */
+    const UI = {
+        holeBtn: null,
+        buyBtn: null,
+        clockBtn: null,
+        holeSpeedBtn: null
+    };
+
+    /** 从 localStorage 加载设置 */
+    function loadSettings() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (saved) {
+                holeEnabled = saved.holeEnabled ?? true;
+                buyEnabled = saved.buyEnabled ?? true;
+                clockEnabled = saved.clockEnabled ?? true;
+                holeSpeedEnabled = saved.holeSpeedEnabled ?? true;
+            }
+        } catch (e) {
+            console.warn("⚠️ 设置加载失败，使用默认值");
+        }
+    }
+
+    /** 保存设置到 localStorage */
+    function saveSettings() {
+        const settings = {
+            holeEnabled,
+            buyEnabled,
+            clockEnabled,
+            holeSpeedEnabled
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    }
+
+    /** —— 工具：按钮文本刷新 —— */
+    function refreshButtonTexts() {
+        if (UI.holeBtn) UI.holeBtn.textContent = holeEnabled ? "自动打洞✅" : "自动打洞❌";
+        if (UI.buyBtn) UI.buyBtn.textContent = buyEnabled ? "自动购卡✅" : "自动购卡❌";
+        if (UI.clockBtn) UI.clockBtn.textContent = clockEnabled ? "自动时钟✅" : "自动时钟❌";
+        if (UI.holeSpeedBtn) UI.holeSpeedBtn.textContent = holeSpeedEnabled ? "自动黑洞加速✅" : "自动黑洞加速❌";
+    }
 
     /**
      * 创建用于自动化各种游戏功能的切换按钮，并将它们添加到导航栏中。
@@ -54,33 +99,40 @@
         holeBtn.addEventListener("click", () => {
             holeEnabled = !holeEnabled;
             holeBtn.innerText = holeEnabled ? "自动打洞✅" : "自动打洞❌";
+            saveSettings();
+            refreshButtonTexts();
             console.log(holeEnabled ? "✅ 自动打洞已启用" : "⏸ 自动打洞已禁用");
         });
         nav.appendChild(holeBtn);
+        UI.holeBtn = holeBtn;
 
         // 购卡按钮
         const buyBtn = document.createElement("button");
         buyBtn.id = "auto-buy-btn";
         buyBtn.className = "tab-btn";
-        buyBtn.innerText = "自动购卡✅";
         buyBtn.addEventListener("click", () => {
             buyEnabled = !buyEnabled;
             buyBtn.innerText = buyEnabled ? "自动购卡✅" : "自动购卡❌";
+            saveSettings();
+            refreshButtonTexts();
             console.log(buyEnabled ? "✅ 自动购卡已启用" : "⏸ 自动购卡已禁用");
         });
         nav.appendChild(buyBtn);
+        UI.buyBtn = buyBtn;
 
         // 时钟按钮
         const clockBtn = document.createElement("button");
         clockBtn.id = "auto-clock-btn";
         clockBtn.className = "tab-btn";
-        clockBtn.innerText = "自动时钟✅";
         clockBtn.addEventListener("click", () => {
             clockEnabled = !clockEnabled;
             clockBtn.innerText = clockEnabled ? "自动时钟✅" : "自动时钟❌";
+            saveSettings();
+            refreshButtonTexts();
             console.log(clockEnabled ? "✅ 自动时钟已启用" : "⏸ 自动时钟已禁用");
         });
         nav.appendChild(clockBtn);
+        UI.clockBtn = clockBtn;
 
         // 黑洞加速按钮
         const holeSpeedBtn = document.createElement("button");
@@ -90,9 +142,15 @@
         holeSpeedBtn.addEventListener("click", () => {
             holeSpeedEnabled = !holeSpeedEnabled;
             holeSpeedBtn.innerText = holeSpeedEnabled ? "自动黑洞加速✅" : "自动黑洞加速❌";
+            saveSettings();
+            refreshButtonTexts();
             console.log(holeSpeedEnabled ? "✅ 自动黑洞加速已启用" : "⏸ 自动黑洞加速已禁用");
         });
         nav.appendChild(holeSpeedBtn);
+        UI.holeSpeedBtn = holeSpeedBtn;
+
+        // 初始化按钮文本
+        refreshButtonTexts();
     }
 
     /**
@@ -225,7 +283,8 @@
     }
 
     // 脚本启动入口
+    loadSettings();
     createToggleButtons();
     autoClickManager();
-    console.log("🚀 自动购卡 / 打洞 / 时钟 脚本已启动（按钮集成到 tab 导航栏）");
+    console.log("🚀 自动购卡 / 打洞 / 时钟 / 黑洞加速 脚本已启动（按钮集成到 tab 导航栏 / 支持记忆功能）");
 })();
