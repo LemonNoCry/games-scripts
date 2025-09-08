@@ -11,38 +11,7 @@ It takes care of repetitive clicking so you can focus on enjoying the game.
 
 ## ✨ Features  
 
-### 1. Auto Card Purchase  
-
-- Automatically clicks **Bulk Buy**  
-- Fills in any **missing single cards**  
-- Prevents card gaps caused by misclicks or oversight  
-
----
-
-### 2. Auto Hole Drilling  
-
-- Automatically clicks the **Hole button**  
-- Triggers the **card hover effect** after drilling  
-- Ensures you never miss a hole, maximizing efficiency  
-
----
-
-### 3. Auto Time Crunch ⏰  
-
-- Automatically clicks the **Time Crunch button**  
-- Periodically triggers to generate extra currency  
-
----
-
-### 4. Auto Harvester
-
-- Automatically clicks the **Harvester button**
-- Periodically triggers to boost harvester output efficiency
-- Ensures no harvester resources go to waste
-
----
-
-### 5. Player Controls (Toggle Buttons)  
+### 1. Player Controls (Toggle Buttons)  
 
 New buttons will appear in the **top navigation bar (Tabs)**:  
 
@@ -50,9 +19,49 @@ New buttons will appear in the **top navigation bar (Tabs)**:
 - `Auto Hole ✅ / ❌`  
 - `Auto Clock ✅ / ❌`  
 - `Auto Harvester ✅ / ❌`
+- `Card Doubler ✅ / ❌`
 
 👉 You can enable or disable each feature anytime, full control in your hands.  
 👉 Supports memory function, will automatically restore previous settings on next game load.
+
+---
+
+### 2. Auto Card Purchase  
+
+- Automatically clicks **Bulk Buy**  
+- Fills in any **missing single cards**  
+- Prevents card gaps caused by misclicks or oversight  
+
+---
+
+### 3. Auto Hole Drilling  
+
+- Automatically clicks the **Hole button**  
+- Triggers the **card hover effect** after drilling  
+- Ensures you never miss a hole, maximizing efficiency  
+
+---
+
+### 4. Auto Time Crunch ⏰  
+
+- Automatically clicks the **Time Crunch button**  
+- Periodically triggers to generate extra currency  
+
+---
+
+### 5. Auto Harvester
+
+- Automatically clicks the **Harvester button**
+- Periodically triggers to boost harvester output efficiency
+- Ensures no harvester resources go to waste
+
+---
+
+### 6. Card Doubler
+
+- Automatically clicks the **Card Doubler button**
+- Periodically triggers to boost card output efficiency
+- Ensures no card resources go to waste
 
 ---
 

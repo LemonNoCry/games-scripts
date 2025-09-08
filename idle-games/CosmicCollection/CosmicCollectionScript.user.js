@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.6
+// @version      1.7
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -27,13 +27,16 @@
     let clockEnabled = true;
     /** 控制黑洞加速功能的开关 */
     let holeSpeedEnabled = true;
+    /**控制卡片加倍功能的开关 */
+    let cardDoubleEnabled = true;
 
     /** UI 引用，便于后续刷新文本 */
     const UI = {
         holeBtn: null,
         buyBtn: null,
         clockBtn: null,
-        holeSpeedBtn: null
+        holeSpeedBtn: null,
+        cardDoubleBtn: null
     };
 
     /** 从 localStorage 加载设置 */
@@ -41,10 +44,12 @@
         try {
             const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
             if (saved) {
-                holeEnabled = saved.holeEnabled ?? true;
-                buyEnabled = saved.buyEnabled ?? true;
-                clockEnabled = saved.clockEnabled ?? true;
-                holeSpeedEnabled = saved.holeSpeedEnabled ?? true;
+                holeEnabled = saved.holeEnabled ?? false;
+                buyEnabled = saved.buyEnabled ?? false;
+                clockEnabled = saved.clockEnabled ?? false;
+                holeSpeedEnabled = saved.holeSpeedEnabled ?? false;
+                cardDoubleEnabled = saved.cardDoubleEnabled ?? false;
+                console.log("✅ 设置加载成功");
             }
         } catch (e) {
             console.warn("⚠️ 设置加载失败，使用默认值");
@@ -57,7 +62,8 @@
             holeEnabled,
             buyEnabled,
             clockEnabled,
-            holeSpeedEnabled
+            holeSpeedEnabled,
+            cardDoubleEnabled
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     }
@@ -68,6 +74,7 @@
         if (UI.buyBtn) UI.buyBtn.textContent = buyEnabled ? "自动购卡✅" : "自动购卡❌";
         if (UI.clockBtn) UI.clockBtn.textContent = clockEnabled ? "自动时钟✅" : "自动时钟❌";
         if (UI.holeSpeedBtn) UI.holeSpeedBtn.textContent = holeSpeedEnabled ? "自动黑洞加速✅" : "自动黑洞加速❌";
+        if (UI.cardDoubleBtn) UI.cardDoubleBtn.textContent = cardDoubleEnabled ? "卡片加倍✅" : "卡片加倍❌";
     }
 
     /**
@@ -148,6 +155,21 @@
         });
         nav.appendChild(holeSpeedBtn);
         UI.holeSpeedBtn = holeSpeedBtn;
+
+        // 卡片加倍按钮
+        const cardDoubleBtn = document.createElement("button");
+        cardDoubleBtn.id = "auto-card-double-btn";
+        cardDoubleBtn.className = "tab-btn";
+        cardDoubleBtn.innerText = "卡片加倍✅";
+        cardDoubleBtn.addEventListener("click", () => {
+            cardDoubleEnabled = !cardDoubleEnabled;
+            cardDoubleBtn.innerText = cardDoubleEnabled ? "卡片加倍✅" : "卡片加倍❌";
+            saveSettings();
+            refreshButtonTexts();
+            console.log(cardDoubleEnabled ? "✅ 卡片加倍已启用" : "⏸ 卡片加倍已禁用");
+        });
+        nav.appendChild(cardDoubleBtn);
+        UI.cardDoubleBtn = cardDoubleBtn;
 
         // 初始化按钮文本
         refreshButtonTexts();
@@ -239,9 +261,8 @@
      */
     function tryClickClock() {
         const btn = document.getElementById("time-crunch-button");
-        if (btn && isButtonVisible(btn)) {
-            const ev = new MouseEvent("click", { bubbles: true, cancelable: true, view: window });
-            btn.dispatchEvent(ev);
+        if (btn && isButtonVisible(btn) && btn.className == "time-crunch-button ready") {
+            btn.click();
             console.log("⏰ 时钟按钮点击成功");
         }
     }
@@ -261,6 +282,19 @@
     }
 
     /**
+     * 点击卡片加倍按钮
+     * 查找并点击卡片加倍按钮（如果可见）
+     * @returns {void}
+     */
+    function tryClickCardDouble() {
+        const btn = document.getElementById("absorber-button");
+        if (btn && isButtonVisible(btn) && btn.className == "absorber-button maxed") {
+            btn.click();
+            console.log("🔄 卡片加倍按钮点击成功");
+        }
+    }
+
+    /**
      * 主循环管理器
      * 设置定时器来自动执行各种游戏操作：
      * - 每秒执行：打洞、批量购卡、时钟操作
@@ -272,6 +306,7 @@
         setInterval(() => { if (holeEnabled) tryClickHole(); }, 1000);
         setInterval(() => { if (buyEnabled) tryClickBulkBuy(); }, 1000);
         setInterval(() => { if (clockEnabled) tryClickClock(); }, 1000);
+        setInterval(() => { if (cardDoubleEnabled) tryClickCardDouble(); }, 1000);
 
         // 每2秒尝试：黑洞加速
         setInterval(() => { if (holeSpeedEnabled) tryClickHoleSpeed(); }, 2000);
