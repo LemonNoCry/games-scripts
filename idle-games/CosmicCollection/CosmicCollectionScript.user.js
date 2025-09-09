@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.8
+// @version      1.9
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -21,8 +21,10 @@
 
     /** 控制打洞功能的开关 */
     let holeEnabled = true;
-    /** 控制购卡功能的开关 */
+    /** 控制批量购卡功能的开关 */
     let buyEnabled = true;
+    /** 控制单卡购买功能的开关 */
+    let singleCardEnabled = true;
     /** 控制时钟功能的开关 */
     let clockEnabled = true;
     /** 控制黑洞加速功能的开关 */
@@ -34,6 +36,7 @@
     const UI = {
         holeBtn: null,
         buyBtn: null,
+        singleCardBtn: null,
         clockBtn: null,
         holeSpeedBtn: null,
         cardDoubleBtn: null
@@ -72,6 +75,7 @@
     function refreshButtonTexts() {
         if (UI.holeBtn) UI.holeBtn.textContent = holeEnabled ? "自动打洞✅" : "自动打洞❌";
         if (UI.buyBtn) UI.buyBtn.textContent = buyEnabled ? "自动购卡✅" : "自动购卡❌";
+        if (UI.singleCardBtn) UI.singleCardBtn.textContent = singleCardEnabled ? "自动单卡购买✅" : "自动单卡购买❌";
         if (UI.clockBtn) UI.clockBtn.textContent = clockEnabled ? "自动时钟✅" : "自动时钟❌";
         if (UI.holeSpeedBtn) UI.holeSpeedBtn.textContent = holeSpeedEnabled ? "自动黑洞加速✅" : "自动黑洞加速❌";
         if (UI.cardDoubleBtn) UI.cardDoubleBtn.textContent = cardDoubleEnabled ? "卡片加倍✅" : "卡片加倍❌";
@@ -126,6 +130,20 @@
         });
         nav.appendChild(buyBtn);
         UI.buyBtn = buyBtn;
+
+        // 单卡购买按钮
+        const singleCardBtn = document.createElement("button");
+        singleCardBtn.id = "auto-single-card-btn";
+        singleCardBtn.className = "tab-btn";
+        singleCardBtn.addEventListener("click", () => {
+            singleCardEnabled = !singleCardEnabled;
+            singleCardBtn.innerText = singleCardEnabled ? "自动单卡购买✅" : "自动单卡购买❌";
+            saveSettings();
+            refreshButtonTexts();
+            console.log(singleCardEnabled ? "✅ 自动单卡购买已启用" : "⏸ 自动单卡购买已禁用");
+        });
+        nav.appendChild(singleCardBtn);
+        UI.singleCardBtn = singleCardBtn;
 
         // 时钟按钮
         const clockBtn = document.createElement("button");
@@ -218,6 +236,7 @@
      * @returns {void}
      */
     function tryClickBulkBuy() {
+        if (!buyEnabled) return;
         const btn = document.getElementById("merchant-bulkbuy-btn");
         if (btn && isButtonVisible(btn)) {
             btn.click();
@@ -231,6 +250,7 @@
      * @returns {void}
      */
     function tryClickSingleBuys() {
+        if (!singleCardEnabled) return;
         const btn = document.getElementById("merchant-bulkbuy-btn");
         //如果存在批量购买按钮且可见，则跳过单卡购买
         if (btn && isButtonVisible(btn)) return;
@@ -250,6 +270,7 @@
      * @returns {void}
      */
     function tryClickHole() {
+        if (!holeEnabled) return;
         const btn = document.getElementById("hole-button");
         if (btn && isButtonVisible(btn)) {
             btn.click();
@@ -264,6 +285,7 @@
      * @returns {void}
      */
     function tryClickClock() {
+        if (!clockEnabled) return;
         const btn = document.getElementById("time-crunch-button");
         if (btn && isButtonVisible(btn) && btn.className == "time-crunch-button ready") {
             btn.click();
@@ -277,6 +299,7 @@
      * @returns {void}
      */
     function tryClickHoleSpeed() {
+        if (!holeSpeedEnabled) return;
         const btn = document.getElementById("harvester-button");
         if (btn && isButtonVisible(btn)) {
             const ev = new MouseEvent("click", { bubbles: true, cancelable: true, view: window });
@@ -291,6 +314,7 @@
      * @returns {void}
      */
     function tryClickCardDouble() {
+        if (!cardDoubleEnabled) return;
         const btn = document.getElementById("absorber-button");
         if (btn && isButtonVisible(btn) && btn.className == "absorber-button maxed") {
             btn.click();
@@ -307,18 +331,14 @@
      */
     function autoClickManager() {
         // 每秒尝试：打洞 + 批量购卡 + 时钟
-        setInterval(() => { if (holeEnabled) tryClickHole(); }, 1000);
-        setInterval(() => { if (buyEnabled) tryClickBulkBuy(); }, 1000);
-        setInterval(() => { if (clockEnabled) tryClickClock(); }, 1000);
-        setInterval(() => { if (cardDoubleEnabled) tryClickCardDouble(); }, 1000);
+        setInterval(() => { tryClickHole(); }, 1000);
+        setInterval(() => { tryClickBulkBuy(); }, 1000);
+        setInterval(() => { tryClickSingleBuys(); }, 1000);
+        setInterval(() => { tryClickClock(); }, 1000);
+        setInterval(() => { tryClickCardDouble(); }, 1000);
 
         // 每2秒尝试：黑洞加速
-        setInterval(() => { if (holeSpeedEnabled) tryClickHoleSpeed(); }, 2000);
-
-        // 单卡购卡（2s 一次）
-        setInterval(() => {
-            if (buyEnabled) tryClickSingleBuys();
-        }, 2000);
+        setInterval(() => { tryClickHoleSpeed(); }, 2000);
     }
 
     // 脚本启动入口
