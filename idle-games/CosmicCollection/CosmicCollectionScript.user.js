@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.7
+// @version      1.8
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -231,6 +231,10 @@
      * @returns {void}
      */
     function tryClickSingleBuys() {
+        const btn = document.getElementById("merchant-bulkbuy-btn");
+        //如果存在批量购买按钮且可见，则跳过单卡购买
+        if (btn && isButtonVisible(btn)) return;
+
         const btns = document.querySelectorAll(".offer-buy-btn:not(.unaffordable)");
         btns.forEach(btn => {
             if (isButtonVisible(btn)) {
