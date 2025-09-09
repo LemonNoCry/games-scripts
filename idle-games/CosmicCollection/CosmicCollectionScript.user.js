@@ -3,7 +3,7 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.10
+// @version      1.10.1
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
@@ -49,6 +49,7 @@
             if (saved) {
                 holeEnabled = saved.holeEnabled ?? false;
                 buyEnabled = saved.buyEnabled ?? false;
+                singleCardEnabled = saved.singleCardEnabled ?? false;
                 clockEnabled = saved.clockEnabled ?? false;
                 holeSpeedEnabled = saved.holeSpeedEnabled ?? false;
                 cardDoubleEnabled = saved.cardDoubleEnabled ?? false;
@@ -64,6 +65,7 @@
         const settings = {
             holeEnabled,
             buyEnabled,
+            singleCardEnabled,
             clockEnabled,
             holeSpeedEnabled,
             cardDoubleEnabled
