@@ -3,11 +3,11 @@
 // @name:en     Cosmic Idle Helper
 // @namespace    LemonNoCry
 // @license      MIT
-// @version      1.10.1
+// @version      1.10.2
 // @description 自动点击黑洞、购卡、时钟，解放双手！
 // @description:en Auto click black hole, buy cards, and time crunch. Save your hands!
 // @author       LemonNoCry
-// @match        https://gltyx.github.io/*
+// @match        https://gltyx.github.io/cosmic-collection/*
 // @match        https://cosmic-collection.g8hh.com.cn/*
 // @match        https://kuzzigames.com/cosmic_collection/*
 // @grant        none
