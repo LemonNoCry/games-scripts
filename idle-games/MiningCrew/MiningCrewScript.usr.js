@@ -1,5 +1,6 @@
 // ==UserScript==
-// @name         挖矿兵团（Mining Crew） 脚本
+// @name         挖矿兵团（Mining Crew）-助手
+// @description  自动点击升级按钮
 // @namespace    LemonNoCry
 // @author       LemonNoCry
 // @license      MIT
